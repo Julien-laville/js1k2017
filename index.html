@@ -1,0 +1,35 @@
+<script src="d3.js"></script>
+<body>
+<script>
+
+    let svg = d3.select('body').append('svg')
+    let base = 440
+    let freqs = [base]
+    function next(freq) {
+        return freq * Math.pow(2,1/12)
+    }
+    /* over octaves */
+    for(let i = 0; i < 6; i ++) {
+        for(let j = 0; j < 12; j ++) {
+            base = next(base)
+            freqs.push(base)
+        }
+    }
+    
+    
+    svg.selectAll('rect')
+        .data(freqs)
+        .enter()
+        .append('rect')
+        .attr({
+        
+            x : function(d,i) {console.log('a',d,i);return i * 30},
+            y : 0,//function(d,i) {return d},
+            width : 29,
+            height : 33
+    
+    
+    })
+    
+</script>
+    </body>
