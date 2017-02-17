@@ -4,7 +4,7 @@
         margin: 0;
     }
 </style>
-<canvas style="background:#ccc;" id="a"></canvas>
+<canvas style="background:#212321;" id="a"></canvas>
 
 <script>
     
@@ -27,8 +27,39 @@
     }
     
     setInterval(i=>{
-        a.width +=0
-        t++
+        a.width +=0;t++
+        /* grid */
+        c.strokeStyle = 'hsl(170,100%,50%)'
+        c.lineWidth = 10
+        let an = 0 + (t / 3000) % (Math.PI * 2)
+        
+        for(let i = 0; i < 80; i ++) {
+            an += Math.PI / 40
+            
+            c.beginPath()
+            c.moveTo(cw/2,-3000)
+            c.lineTo(cw/2 + Math.cos(an) * 2000, Math.sin(an) * 2000)
+            c.stroke()
+        }
+        c.strokeStyle = 'hsl(200,50%,50%)'
+        for(let i = 0; i < 20; i ++) {
+            c.beginPath()
+            c.moveTo(0,ch / 20 * i)
+            c.lineTo(cw/20 * i * 1.4 - (cw / 20*1.4 / 2 + t), ch)
+            c.stroke()
+        }
+        c.strokeStyle = 'hsl(200,50%,50%)'
+        c.lineWidth = 10
+         for(let i = 0; i < 10; i ++) {
+            c.beginPath()
+            c.moveTo(0,ch / 20 * i * (i * 0.3))
+            c.lineTo(cw, ch / 20 * i* (i * 0.3))
+            c.stroke()
+        }
+
+        
+        
+        
 
         for(let i = 0; i < moutains.length; i ++) {
             let m = moutains[i]
@@ -50,6 +81,10 @@
         
         c.fillStyle = '#000'
         c.fillRect(0,ch-100,cw,100)
+        
+        c.fillStyle = 'hsl(170,50%,50%)'
+
+        c.fillRect(0,ch-100,cw,10)
 
         
     }, 16)
@@ -64,7 +99,7 @@
         c.lineTo((800 + (moutain.plan * t) + moutain.pos) % cw,ch+moutain.size)
         c.fill()
         c.strokeStyle = 'hsl(170,50%,50%)'
-            c.lineWidth = 10
+        c.lineWidth = 10
         c.stroke()
     }
     
