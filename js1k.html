@@ -1,3 +1,9 @@
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+</style>
 <canvas style="background:#ccc;" id="a"></canvas>
 
 <script>
@@ -9,10 +15,10 @@
     let t = 0;
     let c = a.getContext("2d")
     let particuls = []
-    for(let i = 0; i < 50; i ++) {
+    for(let i = 0; i < 100; i ++) {
         particuls.push({life : 300, x : Math.random() * cw, y : Math.random() * ch})
     }
-    let moutains = [{pos : 0,size : 0, plan : 0.1}, {pos : 150,size : 0, plan : 0.4}, {pos : -100,size : 30, plan : 0.4}, {pos : -200,size : 50, plan : 0.4}] 
+    let moutains = [{pos : 1000,size : 0, plan : 0.1}, {pos : 800,size : 0, plan : 0.4}, {pos : -100,size : 30, plan : 0.4}, {pos : -400,size : 100, plan : 0.4}] 
    
     
     let mx=0,my=0
@@ -23,7 +29,7 @@
     setInterval(i=>{
         a.width +=0
         t++
-        c.fillRect(0,ch-100,cw,100)
+
         for(let i = 0; i < moutains.length; i ++) {
             let m = moutains[i]
             drawMountain(m,t)
@@ -34,13 +40,17 @@
         for(let i = 0; i < particuls.length; i ++ ) {
             let p = particuls[i]
             
-            let d = Math.hypot(p.x - mx, p.y - my)
+            let d = Math.hypot(p.x - mx, p.y - my) / 10 
             
-            c.fillStyle = 'hsl(' + t +' ,50%,' + d + '%)'
-            c.fillRect(p.x,(p.y + t)%ch,10,10)
-            c.fillStyle = 'rgba(0,0,0,0.2)'
-            c.fillRect(p.x-10,(p.y + t)%ch - 10,30,30)
+            c.fillStyle = 'hsl(' + t + ' ,50%,' + d + '%)'
+            c.fillRect(p.x + Math.sin((t + i * 100 )/ 100 ) * 100,(p.y + t)%ch - 20,10,10)
+            //c.fillStyle = 'rgba(0,0,0,0.2)'
+            //c.fillRect(p.x-10,(p.y + t )%ch - 30 ,30,30)
         }
+        
+        c.fillStyle = '#000'
+        c.fillRect(0,ch-100,cw,100)
+
         
     }, 16)
     
@@ -49,10 +59,13 @@
     
     function drawMountain(moutain, t) {
         c.beginPath()
-        c.lineTo(0 + (moutain.plan * t) + moutain.pos % ch,200+moutain.size)
-        c.lineTo(150 + (moutain.plan * t) + moutain.pos % ch,50+moutain.size)
-        c.lineTo(300 + (moutain.plan * t) + moutain.pos % ch,200+moutain.size)
+        c.lineTo((0 + (moutain.plan * t) + moutain.pos) % cw,ch+moutain.size)
+        c.lineTo((400 + (moutain.plan * t) + moutain.pos) % cw,ch - 500 +moutain.size)
+        c.lineTo((800 + (moutain.plan * t) + moutain.pos) % cw,ch+moutain.size)
         c.fill()
+        c.strokeStyle = 'hsl(170,50%,50%)'
+            c.lineWidth = 10
+        c.stroke()
     }
     
 </script>
